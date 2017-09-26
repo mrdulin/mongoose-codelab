@@ -10,7 +10,6 @@ after((done) => {
 
 describe('58820254', () => {
   it('/addPost', (done) => {
-    expect(1);
     const saveStub = sinon.stub(Post.prototype, 'save').returnsThis();
     request(server)
       .post('/addPost')
