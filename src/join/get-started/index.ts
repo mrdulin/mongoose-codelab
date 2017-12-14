@@ -15,17 +15,17 @@ async function getAllPersonWithOrders(): Promise<any[]> {
         from: `${collectionNamePrefix}_orders`,
         localField: '_id',
         foreignField: 'personId',
-        as: 'orders'
-      }
+        as: 'orders',
+      },
     },
     { $project: { 'orders.personId': 0 } },
     {
       $unwind: {
         path: '$orders',
-        preserveNullAndEmptyArrays: true
-      }
+        preserveNullAndEmptyArrays: true,
+      },
     },
-    { $sort: { name: 1 } }
+    { $sort: { name: 1 } },
   ]);
 }
 
@@ -43,18 +43,18 @@ async function getAllOrdersWithPerson(): Promise<any[]> {
         from: `${collectionNamePrefix}_persons`,
         localField: 'personId',
         foreignField: '_id',
-        as: 'persons'
-      }
+        as: 'persons',
+      },
     },
     {
-      $project: { personId: 0 }
+      $project: { personId: 0 },
     },
     {
       $unwind: {
         path: '$persons',
-        preserveNullAndEmptyArrays: true
-      }
-    }
+        preserveNullAndEmptyArrays: true,
+      },
+    },
   ]);
 }
 
@@ -72,12 +72,12 @@ async function getPersonWithOrders(): Promise<any[]> {
         from: `${collectionNamePrefix}_orders`,
         localField: '_id',
         foreignField: 'personId',
-        as: 'order'
-      }
+        as: 'order',
+      },
     },
     { $project: { 'order.personId': 0 } },
     { $unwind: '$order' },
-    { $sort: { name: 1 } }
+    { $sort: { name: 1 } },
   ]);
 }
 

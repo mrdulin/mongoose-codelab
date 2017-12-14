@@ -1,25 +1,30 @@
 {
   "name": "mongoose5.x-lab",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Learning mongoose version 5.x with nodejs",
+  "main": "",
   "scripts": {
-    "test": "NODE_ENV=test mocha --timeout=30000 --require=ts-node/register"
+    "test": "nyc mocha --timeout=30000 --require=ts-node/register --require source-map-support/register"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mrdulin/mongoose5.x-lab.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mongoose",
+    "nodejs",
+    "unit test",
+    "mongodb"
+  ],
+  "author": "mrdulin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mrdulin/mongoose5.x-lab/issues"
   },
   "homepage": "https://github.com/mrdulin/mongoose5.x-lab#readme",
   "dependencies": {
-    "lodash": "^4.17.10",
-    "mongoose": "^5.2.5",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.7.8",
     "winston": "^3.0.0"
   },
   "devDependencies": {
@@ -28,9 +33,13 @@
     "@types/mocha": "^5.2.4",
     "@types/mongodb": "^3.1.0",
     "@types/mongoose": "^5.2.2",
+    "@types/sinon": "^7.5.0",
     "casual": "^1.5.19",
     "chai": "^4.1.2",
     "mocha": "^5.1.1",
+    "nyc": "^14.1.1",
+    "sinon": "^7.5.0",
+    "source-map-support": "^0.5.16",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2"

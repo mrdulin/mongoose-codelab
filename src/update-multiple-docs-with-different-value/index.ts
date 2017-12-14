@@ -5,10 +5,10 @@ function batchUpdateUsers(ids: string[], datas: any[]) {
     return {
       updateOne: {
         filter: {
-          _id: id
+          _id: id,
         },
-        update: datas[idx]
-      }
+        update: datas[idx],
+      },
     };
   });
   return User.bulkWrite(ops);

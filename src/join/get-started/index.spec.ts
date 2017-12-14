@@ -35,13 +35,13 @@ describe('join test suites', () => {
       expect(personNames).to.be.deep.equal(
         _.chain(metaDatas.persons)
           .orderBy(['name'], ['asc'])
-          .map(person => person.name)
-          .value()
+          .map((person) => person.name)
+          .value(),
       );
 
       const orderNoArray = _.chain(actualValue)
         .map((doc: any) => doc.orders)
-        .filter(v => v)
+        .filter((v) => v)
         .value();
 
       // logger.info(orderNoArray);
@@ -54,7 +54,7 @@ describe('join test suites', () => {
 
       const personNames = _.chain(actualValue)
         .map((doc: any) => (doc.persons ? doc.persons.name : ''))
-        .filter(v => v)
+        .filter((v) => v)
         .uniq()
         .value();
 

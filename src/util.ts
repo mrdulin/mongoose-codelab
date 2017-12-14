@@ -7,14 +7,12 @@ function createAppLogger(): Logger {
     format: combine(
       colorize(),
       timestamp(),
-      printf(
-        (info): string => {
-          const label: string = info.label ? ' ' + info.label + ' ' : '';
-          return `${info.timestamp}${label}[${info.level}] : ${JSON.stringify(info.message)}`;
-        }
-      )
+      printf((info): string => {
+        const label: string = info.label ? ' ' + info.label + ' ' : '';
+        return `${info.timestamp}${label}[${info.level}] : ${JSON.stringify(info.message)}`;
+      }),
     ),
-    transports: [new transports.Console()]
+    transports: [new transports.Console()],
   });
 }
 

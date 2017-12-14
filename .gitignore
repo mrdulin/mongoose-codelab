@@ -1,3 +1,4 @@
 node_modules/
 .project
-./src/replica-set/mongodb
+.nyc_output
+coverage

@@ -18,7 +18,7 @@ export interface IUserModel extends Model<IUser> {
 const userSchema: Schema = new Schema({
   email: { type: String, index: { unique: true }, require: true },
   name: { type: String, index: { unique: true }, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
 });
 
 userSchema.method('comparePassword', function comparePassword(this: IUser, password: string): boolean {

@@ -5,11 +5,11 @@ const collectionNamePrefix = 'update-multiple-docs-with-different-value';
 const userSchema: Schema = new Schema(
   {
     name: String,
-    age: Number
+    age: Number,
   },
   {
-    collection: `${collectionNamePrefix}_users`
-  }
+    collection: `${collectionNamePrefix}_users`,
+  },
 );
 
 const User = model('User', userSchema);

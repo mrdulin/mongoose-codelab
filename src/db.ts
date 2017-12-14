@@ -19,21 +19,18 @@ async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
     .on('connected', () => {
       logger.info('Connect mongodb successfully');
     })
-    .on('error', error => {
+    .on('error', (error) => {
       logger.error(`Connect mongodb failed, ${error}`);
     });
 
-  return mongoose.connect(
-    uri,
-    { useNewUrlParser: true }
-  );
+  return mongoose.connect(uri, { useNewUrlParser: true });
 }
 
 async function init(
   datas: any[],
   Model: mongoose.Model<any>,
   modelName: string,
-  initMongo: boolean = true
+  initMongo: boolean = true,
 ): Promise<mongoose.Mongoose | undefined> {
   let conn: mongoose.Mongoose | undefined;
   if (initMongo) {
