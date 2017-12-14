@@ -10,8 +10,8 @@ export async function bookResultOverviewByOrgId(orgId: Types.ObjectId): Promise<
         from: `${collectionNamePrefix}_books`,
         localField: '_id',
         foreignField: 'bookTemplateId',
-        as: 'books'
-      }
+        as: 'books',
+      },
     },
     { $unwind: '$books' },
     {
@@ -19,11 +19,11 @@ export async function bookResultOverviewByOrgId(orgId: Types.ObjectId): Promise<
         from: `${collectionNamePrefix}_bookResults`,
         localField: 'books._id',
         foreignField: 'bookId',
-        as: 'bookResults'
-      }
+        as: 'bookResults',
+      },
     },
     { $unwind: '$bookResults' },
-    { $project: { books: 0 } }
+    { $project: { books: 0 } },
   ]);
 }
 
@@ -35,9 +35,9 @@ export async function getBookTemplateWithBookByOrgId(orgId: Types.ObjectId) {
         from: `${collectionNamePrefix}_books`,
         localField: '_id',
         foreignField: 'bookTemplateId',
-        as: 'books'
-      }
+        as: 'books',
+      },
     },
-    { $unwind: '$books' }
+    { $unwind: '$books' },
   ]);
 }

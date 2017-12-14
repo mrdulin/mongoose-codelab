@@ -23,11 +23,11 @@ const userSchema = new Schema(
   {
     name: String,
     joined: { type: Date, default: Date.now() },
-    likes: [String]
+    likes: [String],
   },
   {
-    collection: 'user-preference_users'
-  }
+    collection: 'user-preference_users',
+  },
 );
 
 async function uppercaseAndSortByUsername(this: IUserModel): Promise<Array<{ name: string }>> {
@@ -35,10 +35,10 @@ async function uppercaseAndSortByUsername(this: IUserModel): Promise<Array<{ nam
     {
       $project: {
         name: { $toUpper: '$name' },
-        _id: 0
-      }
+        _id: 0,
+      },
     },
-    { $sort: { name: 1 } }
+    { $sort: { name: 1 } },
   ]);
 }
 
@@ -50,11 +50,11 @@ interface IUsernamesOrderedByJoinMonth {
 async function usernamesOrderedByJoinMonth(this: IUserModel): Promise<IUsernamesOrderedByJoinMonth[]> {
   return this.aggregate([
     {
-      $project: { month_joined: { $month: '$joined' }, _id: 0, name: 1 }
+      $project: { month_joined: { $month: '$joined' }, _id: 0, name: 1 },
     },
     {
-      $sort: { month_joined: 1 }
-    }
+      $sort: { month_joined: 1 },
+    },
   ]);
 }
 
@@ -66,14 +66,14 @@ interface ITotalNumberOfJoinsPerMonthResponse {
 async function totalNumberOfJoinsPerMonth(this: IUserModel): Promise<ITotalNumberOfJoinsPerMonthResponse[]> {
   return this.aggregate([
     {
-      $project: { month_joined: { $month: '$joined' } }
+      $project: { month_joined: { $month: '$joined' } },
     },
     {
-      $group: { _id: { month_joined: '$month_joined' }, number: { $sum: 1 } }
+      $group: { _id: { month_joined: '$month_joined' }, number: { $sum: 1 } },
     },
     {
-      $sort: { number: 1, '_id.month_joined': 1 }
-    }
+      $sort: { number: 1, '_id.month_joined': 1 },
+    },
   ]);
 }
 
@@ -87,7 +87,7 @@ async function topFiveLikes(this: IUserModel): Promise<ITopFiveLikes[]> {
     { $unwind: '$likes' },
     { $group: { _id: '$likes', number: { $sum: 1 } } },
     { $sort: { number: -1, _id: 1 } },
-    { $limit: 5 }
+    { $limit: 5 },
   ]);
 }
 
@@ -95,7 +95,7 @@ userSchema.static({
   uppercaseAndSortByUsername,
   usernamesOrderedByJoinMonth,
   totalNumberOfJoinsPerMonth,
-  topFiveLikes
+  topFiveLikes,
 });
 
 // 注意：model初始化一定要在static和method方法之后
@@ -107,5 +107,5 @@ export {
   MODEL_NAME,
   IUsernamesOrderedByJoinMonth,
   ITotalNumberOfJoinsPerMonthResponse,
-  ITopFiveLikes
+  ITopFiveLikes,
 };

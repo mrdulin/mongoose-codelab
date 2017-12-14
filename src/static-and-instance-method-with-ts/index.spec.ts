@@ -1,12 +1,9 @@
 import { expect } from 'chai';
-import * as mongoose from 'mongoose';
-
 import { User } from '.';
 
 describe('Mongoose Static and instance method test suites', () => {
   it('instance method - comparePassword', () => {
     const user = new User({ email: '123@qq.com', name: 'qq', password: '123' });
-    // tslint:disable-next-line:no-unused-expression
     expect(user.comparePassword('321')).to.be.false;
   });
 

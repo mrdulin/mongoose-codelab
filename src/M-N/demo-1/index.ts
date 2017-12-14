@@ -1,5 +1,4 @@
 import { Product, Category, ProductCategory } from './model';
-import { logger } from '../../util';
 
 /**
  * 获取商品及其所属的分类

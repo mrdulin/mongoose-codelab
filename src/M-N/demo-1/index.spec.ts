@@ -1,10 +1,8 @@
 import { expect } from 'chai';
-import * as mongoose from 'mongoose';
-import * as _ from 'lodash';
-
+import mongoose from 'mongoose';
+import _ from 'lodash';
 import * as seed from './init';
 import { init, MongoConnect } from '../../db';
-import { logger } from '../../util';
 import { Product, Category, ProductCategory } from './model';
 import { getProductWithCategories } from '.';
 
@@ -16,7 +14,7 @@ before(async () => {
   await Promise.all([
     init(datas.products, Product, 'Product', false),
     init(datas.categories, Category, 'Category', false),
-    init(datas.productCategory, ProductCategory, 'ProductCategory', false)
+    init(datas.productCategory, ProductCategory, 'ProductCategory', false),
   ]);
 });
 
@@ -31,7 +29,7 @@ describe('M-N demo-1 test suites', () => {
     expect(datas.products).to.have.lengthOf(seed.metaDatas.product.count);
     expect(datas.categories).to.be.have.lengthOf(seed.metaDatas.product.categoryCount * seed.metaDatas.product.count);
     expect(datas.productCategory).to.be.have.lengthOf(
-      seed.metaDatas.product.categoryCount * seed.metaDatas.product.count
+      seed.metaDatas.product.categoryCount * seed.metaDatas.product.count,
     );
   });
 

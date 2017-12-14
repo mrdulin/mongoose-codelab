@@ -52,16 +52,16 @@ export async function changeAncestryOfCategory(id: string, parent: string) {
       { _id: id },
       {
         $set: { parent },
-        $push: { ancestors: { _id: parent, name: parentCat.name, slug: parentCat.slug } }
-      }
+        $push: { ancestors: { _id: parent, name: parentCat.name, slug: parentCat.slug } },
+      },
     );
 
     const descendants: any[] = await Category.find({ 'ancestors._id': id });
 
     await Promise.all(
-      descendants.map(cat => {
+      descendants.map((cat) => {
         return buildAllAncestors(cat._id, cat.parent);
-      })
+      }),
     );
   } catch (err) {
     logger.error(err);

@@ -12,11 +12,13 @@ describe('batchUpdateUsers', () => {
     const stub = sinon.stub(User, 'bulkWrite').resolves(mBulkWriteOperationResult);
     const actualValue = await batchUpdateUsers(ids, datas);
     expect(actualValue).to.be.equal(mBulkWriteOperationResult);
-    stub.calledWith([
-      { updateone: { filter: { _id: '1' }, update: { name: 'sinon' } } },
-      { updateone: { filter: { _id: '2' }, update: { name: 'mocha' } } },
-      { updateone: { filter: { _id: '3' }, update: { name: 'chai' } } },
-    ]);
+    expect(
+      stub.calledWith([
+        { updateOne: { filter: { _id: '1' }, update: { name: 'sinon' } } },
+        { updateOne: { filter: { _id: '2' }, update: { name: 'mocha' } } },
+        { updateOne: { filter: { _id: '3' }, update: { name: 'chai' } } },
+      ]),
+    ).to.be.true;
     stub.restore();
   });
 });
