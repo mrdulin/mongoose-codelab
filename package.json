@@ -21,10 +21,11 @@
     "mongoose": "^5.2.5"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.2.2",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/mongodb": "^3.1.0",
+    "@types/mongoose": "^5.2.2",
+    "casual": "^1.5.19",
     "chai": "^4.1.2",
     "mocha": "^5.1.1",
     "ts-node": "^7.0.0",
