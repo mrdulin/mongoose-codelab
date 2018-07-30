@@ -6,7 +6,7 @@ interface IPostStatic {
   findByAuthorName(this: mongoose.Model<IPost>, name: string): Promise<mongoose.Model<IPost>>;
 }
 
-interface IPost extends mongoose.Document, IPostStatic {
+export interface IPost extends mongoose.Document, IPostStatic {
   title: string;
   author: string;
   body: string;
@@ -55,27 +55,5 @@ postSchema.static({
   findOneByAuthorName,
   findTopAuthor
 });
-
-async function main() {
-  await MongoConnect();
-
-  // try {
-  //   const post: mongoose.Model<IPost> = await Post.schema.statics.findOneByAuthorName('Mohammed.Robel');
-  //   console.log('post: ', post);
-  // } catch (error) {
-  //   console.log(error);
-  // }
-
-  try {
-    const topAuthorResults: any[] = await Post.schema.statics.findTopAuthor();
-    console.log(topAuthorResults);
-  } catch (error) {
-    console.log(error);
-  }
-
-  process.exit();
-}
-
-main();
 
 export { Post };

@@ -6,18 +6,19 @@ const { MONGO_HOST, MONGO_PORT, MONGO_APPLICATION_DATABASE } = config;
 
 const uri: string = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_APPLICATION_DATABASE}`;
 
-function MongoConnect(): Promise<any> {
-  return mongoose
-    .connect(
+async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
+  let conn;
+  try {
+    conn = mongoose.connect(
       uri,
       { useNewUrlParser: true }
-    )
-    .then(() => {
-      console.log('Connect mongodb successfully');
-    })
-    .catch(err => {
-      console.log('Connect mongodb failed');
-    });
+    );
+    console.log('Connect mongodb successfully');
+  } catch (error) {
+    console.log('Connect mongodb failed');
+  }
+
+  return conn;
 }
 
 export { MongoConnect };
