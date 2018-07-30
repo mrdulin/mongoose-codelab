@@ -1,7 +1,5 @@
 import * as mongoose from 'mongoose';
 
-import { MongoConnect } from '../../db';
-
 interface IPostStatic {
   findByAuthorName(this: mongoose.Model<IPost>, name: string): Promise<mongoose.Model<IPost>>;
 }
@@ -42,11 +40,11 @@ function findTopAuthor(): Promise<any[]> {
       { $sort: { count: -1 } },
       { $limit: 5 }
     ],
-    (err: any, topAuthorResults: any[]) => {
+    (err: any, results: any[]) => {
       if (err) {
         return console.log(err);
       }
-      return topAuthorResults;
+      return results;
     }
   );
 }

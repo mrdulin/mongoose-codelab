@@ -21,4 +21,28 @@ async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
   return conn;
 }
 
-export { MongoConnect };
+async function init(
+  datas: any[],
+  Model: mongoose.Model<any>,
+  modelName: string
+): Promise<mongoose.Mongoose | undefined> {
+  const conn: mongoose.Mongoose | undefined = await MongoConnect();
+
+  try {
+    await Model.collection.drop();
+    console.log(`Drop collection of ${modelName} successfully`);
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await Model.insertMany(datas);
+    console.log(`Successfully created document of ${modelName}`);
+  } catch (error) {
+    console.log(error);
+  }
+
+  return conn;
+}
+
+export { MongoConnect, init };

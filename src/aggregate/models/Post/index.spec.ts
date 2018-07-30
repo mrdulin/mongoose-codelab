@@ -1,13 +1,14 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 
-import { Post, IPost } from '../models/Post';
-import * as MongoInit from '../init';
-import { metaDatas } from '../init';
+import { Post, IPost } from './';
+import * as MongoInit from './init';
+import { init } from '../../../db';
 
 let conn: mongoose.Mongoose | undefined;
 before(async () => {
-  conn = await MongoInit.main();
+  const datas = MongoInit.generateData();
+  conn = await init(datas, Post, 'post');
 });
 
 after(async () => {
@@ -24,7 +25,7 @@ describe('Model - Post test suites', () => {
   });
 
   it('findOneByAuthorName', async () => {
-    const author = metaDatas[0].author;
+    const author = MongoInit.metaDatas[0].author;
     const post: IPost = await Post.schema.statics.findOneByAuthorName(author);
     expect(post.author).to.be.equal(author);
   });
