@@ -1,13 +1,14 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 
-import { Book } from './';
+import { Book, IBook } from './';
 import * as MongoInit from './init';
 import { init } from '../../../db';
 
 let conn: mongoose.Mongoose | undefined;
+let datas: any[];
 before(async () => {
-  const datas = MongoInit.generateData();
+  datas = MongoInit.generateData();
   conn = await init(datas, Book, 'book');
 });
 
@@ -18,9 +19,18 @@ after(async () => {
 });
 
 describe('Model - Book test suites', () => {
-  it('t-1', async () => {
+  // it('post find middleware - 1', async () => {
+  //   const docs = await Book.find();
+  //   expect(docs).to.be.an('array');
+  //   expect(docs).to.have.lengthOf(datas.length);
+  //   expect(docs.filter((doc: any) => doc.bookNew)).to.have.lengthOf(MongoInit.metaDatas[1].count);
+  //   expect(docs.filter((doc: any) => !doc.bookNew)).to.have.lengthOf(MongoInit.metaDatas[0].count);
+  // });
+
+  it('post find middleware - 2', async () => {
     const docs = await Book.find();
-    console.log('docs: ', docs);
-    expect(1).to.be.equal(1);
+    expect(docs).to.be.an('array');
+    expect(docs).to.have.lengthOf(datas.length);
+    expect(docs.filter((doc: IBook) => doc.bookNew)).to.have.lengthOf(MongoInit.metaDatas[2].count);
   });
 });
