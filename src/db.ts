@@ -8,6 +8,7 @@ const uri: string = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_APPLICATION_D
 
 async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
   let conn;
+  mongoose.set('debug', true);
   try {
     conn = mongoose.connect(
       uri,
@@ -24,9 +25,13 @@ async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
 async function init(
   datas: any[],
   Model: mongoose.Model<any>,
-  modelName: string
+  modelName: string,
+  initMongo: boolean = true
 ): Promise<mongoose.Mongoose | undefined> {
-  const conn: mongoose.Mongoose | undefined = await MongoConnect();
+  let conn: mongoose.Mongoose | undefined;
+  if (initMongo) {
+    conn = await MongoConnect();
+  }
 
   try {
     await Model.collection.drop();

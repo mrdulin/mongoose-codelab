@@ -2,6 +2,7 @@ import { Model, Document, Schema, model, NativeError } from 'mongoose';
 import * as casual from 'casual';
 
 export interface IBook extends Document {
+  _id: string;
   title: string;
   author: string;
   created: string;
@@ -9,6 +10,7 @@ export interface IBook extends Document {
 }
 
 const bookSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   title: String,
   author: String,
   created: { type: Date, default: Date.now },
@@ -40,28 +42,32 @@ const bookSchema = new Schema({
 // });
 
 // 方式二：
-bookSchema.post<IBook>('find', function postFindHook(docs: any, next: (err?: NativeError) => void) {
-  console.log('post-find');
+// bookSchema.post<IBook>('find', function postFindHook(docs: any, next: (err?: NativeError) => void) {
+//   console.log('post-find');
 
-  // console.log('original docs: ', docs);
+//   // console.log('original docs: ', docs);
 
-  const docsToBeUpdated: IBook[] = docs
-    .filter((doc: IBook): boolean => doc.bookNew)
-    .map(
-      (doc: IBook): IBook => {
-        const createdTampstamp: number = new Date(doc.created).getTime();
-        doc.bookNew = createdTampstamp > new Date(casual.date('2018-8-2')).getTime();
-        return doc;
-      }
-    )
-    .filter((doc: IBook): boolean => !doc.bookNew);
+//   const docsToBeUpdated: IBook[] = docs
+//     .filter((doc: IBook): boolean => doc.bookNew)
+//     .map(
+//       (doc: IBook): IBook => {
+//         const createdTampstamp: number = new Date(doc.created).getTime();
+//         doc.bookNew = createdTampstamp > new Date(casual.date('2018-8-2')).getTime();
+//         return doc;
+//       }
+//     )
+//     .filter((doc: IBook): boolean => !doc.bookNew);
 
-  // console.log('docsToBeUpdated: ', docsToBeUpdated);
+//   // console.log('docsToBeUpdated: ', docsToBeUpdated);
 
-  Book.updateMany({ _id: { $in: docsToBeUpdated.map((doc: any) => doc._id) } }, { $set: { bookNew: false } })
-    .then(() => next())
-    .catch(next);
-});
+//   if (!docsToBeUpdated.length) {
+//     next();
+//   }
+
+//   Book.updateMany({ _id: { $in: docsToBeUpdated.map((doc: any) => doc._id) } }, { $set: { bookNew: false } })
+//     .then(() => next())
+//     .catch(next);
+// });
 
 const Book: Model<IBook> = model<IBook>('Book', bookSchema);
 

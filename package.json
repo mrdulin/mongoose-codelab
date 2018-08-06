@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --timeout=3000 --require=ts-node/register"
+    "test": "NODE_ENV=test mocha --timeout=30000 --require=ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/mrdulin/mongoose5.x-lab#readme",
   "dependencies": {
+    "lodash": "^4.17.10",
     "mongoose": "^5.2.5"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
+    "@types/lodash": "^4.14.116",
     "@types/mocha": "^5.2.4",
     "@types/mongodb": "^3.1.0",
     "@types/mongoose": "^5.2.2",
