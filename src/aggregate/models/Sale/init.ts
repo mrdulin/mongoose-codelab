@@ -1,9 +1,3 @@
-import * as casual from 'casual';
-import * as mongoose from 'mongoose';
-
-import { Sale } from './';
-import { MongoConnect } from '../../../db';
-
 const metaDatas = [
   { item: 'abc', price: 10, quantity: 2, date: new Date('2014-03-01T08:00:00Z') },
   { item: 'jkl', price: 20, quantity: 1, date: new Date('2014-03-01T09:00:00Z') },

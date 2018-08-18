@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 
-import { Post, IPost } from './';
+import { Post, IPost } from '.';
 import * as MongoInit from './init';
 import { init } from '../../../db';
 

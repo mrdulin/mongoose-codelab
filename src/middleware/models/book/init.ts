@@ -1,8 +1,4 @@
 import * as casual from 'casual';
-import * as mongoose from 'mongoose';
-
-import { Book } from './';
-import { MongoConnect } from '../../../db';
 
 const metaDatas = [
   {

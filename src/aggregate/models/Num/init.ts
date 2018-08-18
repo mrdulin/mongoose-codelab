@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-import { Num } from './';
+import { Num } from '.';
 import { MongoConnect } from '../../../db';
 
 const metaData = {

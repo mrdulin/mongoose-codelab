@@ -1,24 +1,31 @@
 import * as mongoose from 'mongoose';
 
 import { config } from './config';
+import { logger } from './util';
 
 const { MONGO_HOST, MONGO_PORT, MONGO_APPLICATION_DATABASE } = config;
 
 const uri: string = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_APPLICATION_DATABASE}`;
 
 async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
-  let conn;
-  try {
-    conn = mongoose.connect(
-      uri,
-      { useNewUrlParser: true }
-    );
-    console.log('Connect mongodb successfully');
-  } catch (error) {
-    console.log('Connect mongodb failed');
-  }
+  mongoose.connection
+    .on('connecting', () => {
+      logger.info('trying to establish a connection to mongo');
+    })
+    .on('disconnected', () => {
+      logger.info('disconnect mongodb');
+    })
+    .on('connected', () => {
+      logger.info('Connect mongodb successfully');
+    })
+    .on('error', () => {
+      logger.error('Connect mongodb failed');
+    });
 
-  return conn;
+  return mongoose.connect(
+    uri,
+    { useNewUrlParser: true }
+  );
 }
 
 async function init(
@@ -29,17 +36,20 @@ async function init(
   const conn: mongoose.Mongoose | undefined = await MongoConnect();
 
   try {
-    await Model.collection.drop();
-    console.log(`Drop collection of ${modelName} successfully`);
+    const collections = await Model.db.db.listCollections().toArray();
+    if (collections.length) {
+      await Model.collection.drop();
+      logger.info(`Drop collection of ${modelName} successfully`);
+    }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 
   try {
     await Model.insertMany(datas);
-    console.log(`Successfully created document of ${modelName}`);
+    logger.info(`Successfully created document of ${modelName}`);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 
   return conn;
