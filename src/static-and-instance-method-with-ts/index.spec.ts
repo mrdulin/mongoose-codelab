@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 
-import { User } from './';
+import { User } from '.';
 
 describe('Mongoose Static and instance method test suites', () => {
   it('instance method - comparePassword', () => {

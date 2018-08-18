@@ -1,7 +1,7 @@
 import * as casual from 'casual';
 import * as _ from 'lodash';
 
-import { IPost, IComment } from './';
+import { IPost, IComment } from '.';
 
 const authorNames = _.fill(Array(2), casual.name);
 
