@@ -1,5 +1,4 @@
 import * as casual from 'casual';
-import * as _ from 'lodash';
 import { Types } from 'mongoose';
 
 const metaDatas = {
