@@ -1,22 +1,59 @@
 import { Category } from './model';
 import { logger } from '../util';
 
+/**
+ * 根据slug获取分类，由于分类内嵌了ancestors分类的id和slug，通过一次查询就可以满足生成分类breadcrumb展示的需求
+ * @param slug 分类的slug
+ */
 export async function getCategoryBySlug(slug: string) {
-  return Category.findOne({ slug }, { _id: 0, name: 1, slug: 1, 'ancestors.name': 1, 'ancestors.slug': 1 }).exec();
+  return Category.findOne({ slug }, { _id: 0, name: 1, slug: 1, 'ancestors.name': 1, 'ancestors.slug': 1, parent: 1 });
 }
 
 /**
  * 插入新的分类时，构建分类的ancestors
  * @param id 当前分类id
- * @param parentId 父级分类id
+ * @param parent 父级分类id
  */
-export async function buildAncestors(id: string, doc: any) {
-  const parent: any = await Category.findOne({ _id: doc.parent }, { name: 1, slug: 1, ancestors: 1 }).exec();
-  const ancestors = parent.ancestors.concat({ _id: doc.parent, name: doc.name, slug: doc.slug });
-  return Category.findOneAndUpdate({ _id: id }, { $set: { ancestors } }, { new: true }).exec();
+export async function buildAncestors(id: string, parent: any) {
+  const parentDoc: any = await Category.findOne({ _id: parent }, { name: 1, slug: 1, ancestors: 1 });
+  const ancestors = parentDoc.ancestors.concat({ _id: parent, name: parentDoc.name, slug: parentDoc.slug });
+  return Category.findOneAndUpdate({ _id: id }, { $set: { ancestors } }, { new: true });
 }
 
+/**
+ * 创建新的分类, 并更新该分类的ancestors
+ * @param doc 新的分类文档对象
+ */
 export async function createNewCategory(doc: any) {
   const category: any = await Category.create(doc);
-  return buildAncestors(category._id, doc);
+  return buildAncestors(category._id, doc.parent);
+}
+
+export async function buildAllAncestors(id: string, parent: string) {
+  const ancestors = [];
+
+  while (parent) {
+    const parentCat: any = await Category.findOne({ _id: parent }, { parent: 1, name: 1, slug: 1, ancestors: 1 });
+    parent = parentCat.parentId;
+    ancestors.push(parent);
+  }
+  return await Category.update({ _id: id }, { $set: { ancestors } });
+}
+
+/**
+ * 更改分类所属的上级分类
+ * @param id 当前分类id
+ * @param parent 上级分类id
+ */
+export async function changeAncestryOfCategory(id: string, parent: string) {
+  try {
+    await Category.update({ _id: id }, { $set: { parent } });
+
+    const descendants: any[] = await Category.find({ 'ancestors._id': id }, { parent: 1 });
+    for (const cat of descendants) {
+      buildAllAncestors(cat._id, cat.parent);
+    }
+  } catch (err) {
+    logger.error(err);
+  }
 }
