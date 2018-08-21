@@ -2,12 +2,11 @@ import { model, Schema } from 'mongoose';
 
 const modelName = 'Category';
 
-const CategorySchema = new Schema(
+const categorySchema = new Schema(
   {
     name: String,
     parent: { type: Schema.Types.ObjectId, ref: modelName },
-    slug: String,
-    // ancestors: [{ id: { type: Schema.Types.ObjectId, ref: modelName }, name: String, slug: String }]
+    slug: { type: String },
     ancestors: [{ _id: { type: Schema.Types.ObjectId, ref: modelName }, name: String, slug: String }]
   },
   {
@@ -15,6 +14,6 @@ const CategorySchema = new Schema(
   }
 );
 
-const Category = model(modelName, CategorySchema);
+const Category = model(modelName, categorySchema);
 
 export { Category };

@@ -42,6 +42,7 @@ async function init(
   try {
     const collections = await Model.db.db.listCollections().toArray();
     if (collections.length) {
+      await Model.collection.dropIndexes();
       await Model.collection.drop();
       logger.info(`Drop collection of ${modelName} successfully`);
     }
