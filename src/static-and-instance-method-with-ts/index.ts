@@ -1,4 +1,5 @@
 import { Document, Schema, Model, model } from 'mongoose';
+import { logger } from '../util';
 
 export interface IUserDocument extends Document {
   email: string;
@@ -21,7 +22,7 @@ const userSchema: Schema = new Schema({
 });
 
 userSchema.method('comparePassword', function comparePassword(this: IUser, password: string): boolean {
-  console.log('this.password: ', this.password);
+  logger.info(`this.password: ${this.password}`);
   return this.password === password;
 });
 
