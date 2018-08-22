@@ -6,7 +6,7 @@ import { logger } from '../util';
  * @param slug 分类的slug
  */
 export async function getCategoryBySlug(slug: string) {
-  return Category.findOne({ slug }, { _id: 0, name: 1, slug: 1, 'ancestors.name': 1, 'ancestors.slug': 1, parent: 1 });
+  return Category.findOne({ slug });
 }
 
 /**
@@ -33,11 +33,11 @@ export async function buildAllAncestors(id: string, parent: string) {
   const ancestors = [];
 
   while (parent) {
-    const parentCat: any = await Category.findOne({ _id: parent }, { parent: 1, name: 1, slug: 1, ancestors: 1 });
-    parent = parentCat.parentId;
-    ancestors.push(parent);
+    const parentCat: any = await Category.findOne({ _id: parent });
+    parent = parentCat.parent;
+    ancestors.push({ _id: parent ? parent : parentCat._id, name: parentCat.name, slug: parentCat.slug });
   }
-  return await Category.update({ _id: id }, { $set: { ancestors } });
+  return Category.update({ _id: id }, { $set: { ancestors } });
 }
 
 /**
@@ -47,12 +47,22 @@ export async function buildAllAncestors(id: string, parent: string) {
  */
 export async function changeAncestryOfCategory(id: string, parent: string) {
   try {
-    await Category.update({ _id: id }, { $set: { parent } });
+    const parentCat: any = await Category.findOne({ _id: parent }, { name: 1, slug: 1 });
+    await Category.update(
+      { _id: id },
+      {
+        $set: { parent },
+        $push: { ancestors: { _id: parent, name: parentCat.name, slug: parentCat.slug } }
+      }
+    );
 
-    const descendants: any[] = await Category.find({ 'ancestors._id': id }, { parent: 1 });
-    for (const cat of descendants) {
-      buildAllAncestors(cat._id, cat.parent);
-    }
+    const descendants: any[] = await Category.find({ 'ancestors._id': id });
+
+    await Promise.all(
+      descendants.map(cat => {
+        return buildAllAncestors(cat._id, cat.parent);
+      })
+    );
   } catch (err) {
     logger.error(err);
   }

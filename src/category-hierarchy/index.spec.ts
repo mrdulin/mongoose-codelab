@@ -21,10 +21,23 @@ after(async () => {
   }
 });
 
+const findCategoryBySlug = (slug: string) => datas.find((data: any) => data.slug === slug);
+
 describe('category-hierarchy test suites', () => {
+  const childrenSlugs: string[] = seed.metaDatas.children[0].children.map((cat: any) => cat.slug);
+
   it('should initialize categories collection correcly', async () => {
     const categories = await Category.find({}).exec();
     expect(categories).to.be.have.lengthOf(5);
+
+    const ancestors = datas
+      .filter((data: any) => !childrenSlugs.includes(data.slug))
+      .map((data: any, idx: number) => data._id);
+
+    childrenSlugs.forEach((slug: string) => {
+      const cat = findCategoryBySlug(slug);
+      expect(cat.ancestors.map((ancestor: any) => ancestor._id)).to.be.deep.equal(ancestors);
+    });
   });
 
   it('getCategoryBySlug', async () => {
@@ -49,17 +62,22 @@ describe('category-hierarchy test suites', () => {
 
     const newSwing: any = ((await getCategoryBySlug('swing')) as any).toObject();
     expect(newSwing.parent).to.be.deep.equal(seed.metaDatas._id);
-    expect(newSwing.ancestors).to.be.deep.equal([{ name: seed.metaDatas.name, slug: seed.metaDatas.slug }]);
+    expect(newSwing.ancestors).to.be.deep.equal([
+      { _id: seed.metaDatas._id, name: seed.metaDatas.name, slug: seed.metaDatas.slug }
+    ]);
 
-    const childrenSlugs: string[] = seed.metaDatas.children[0].children.map((cat: any) => cat.slug);
-    const ancestors = datas
-      .filter((data: any) => !childrenSlugs.includes(data.slug))
-      .map((data: any, idx: number) => data._id);
+    const results = await Promise.all(childrenSlugs.map((slug: string) => getCategoryBySlug(slug)));
 
-    // TODO: Unhandled promise rejection (rejection id: 1): AssertionError: expected
-    childrenSlugs.forEach(async (slug: string) => {
-      const cat: any = await getCategoryBySlug(slug);
-      expect(cat.ancestors).to.be.deep.equal(ancestors);
+    const ancestorsArray = results.map((cat: any) => {
+      return cat.toObject().ancestors.map((ancestor: any) => {
+        return ancestor._id.toString();
+      });
     });
+
+    // TODO: mongoose id与_id，和之间的比较
+    const ancestors = await Promise.all(['ragtime', 'swing', 'bop'].map((slug: string) => getCategoryBySlug(slug)));
+    expect(ancestorsArray).to.be.deep.equal(
+      _.fill(Array(3), ancestors.map((ancestor: any) => ancestor._id.toString()))
+    );
   });
 });
