@@ -16,6 +16,7 @@ interface IUserModel extends Model<IUser> {
   uppercaseAndSortByUsername(): Array<{ name: string }>;
   usernamesOrderedByJoinMonth(): IUsernamesOrderedByJoinMonth[];
   totalNumberOfJoinsPerMonth(): ITotalNumberOfJoinsPerMonthResponse[];
+  topFiveLikes(): ITopFiveLikes[];
 }
 
 const userSchema = new Schema(
@@ -76,9 +77,35 @@ async function totalNumberOfJoinsPerMonth(this: IUserModel): Promise<ITotalNumbe
   ]);
 }
 
-userSchema.static({ uppercaseAndSortByUsername, usernamesOrderedByJoinMonth, totalNumberOfJoinsPerMonth });
+interface ITopFiveLikes {
+  like: string;
+  number: number;
+}
+
+async function topFiveLikes(this: IUserModel): Promise<ITopFiveLikes[]> {
+  return this.aggregate([
+    { $unwind: '$likes' },
+    { $group: { _id: '$likes', number: { $sum: 1 } } },
+    { $sort: { number: -1, _id: 1 } },
+    { $limit: 5 }
+  ]);
+}
+
+userSchema.static({
+  uppercaseAndSortByUsername,
+  usernamesOrderedByJoinMonth,
+  totalNumberOfJoinsPerMonth,
+  topFiveLikes
+});
 
 // 注意：model初始化一定要在static和method方法之后
 const User: IUserModel = model<IUser, IUserModel>(MODEL_NAME, userSchema);
 
-export { User, IUserDocument, MODEL_NAME, IUsernamesOrderedByJoinMonth, ITotalNumberOfJoinsPerMonthResponse };
+export {
+  User,
+  IUserDocument,
+  MODEL_NAME,
+  IUsernamesOrderedByJoinMonth,
+  ITotalNumberOfJoinsPerMonthResponse,
+  ITopFiveLikes
+};

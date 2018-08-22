@@ -5,7 +5,7 @@ function generateUser() {
   return {
     name: casual.username,
     joined: casual.date('YYYY-MM-DD'),
-    likes: [casual.word, casual.word]
+    likes: [casual.word, casual.word, 'music']
   };
 }
 

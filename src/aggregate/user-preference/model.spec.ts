@@ -7,7 +7,8 @@ import {
   MODEL_NAME,
   IUsernamesOrderedByJoinMonth,
   IUserDocument,
-  ITotalNumberOfJoinsPerMonthResponse
+  ITotalNumberOfJoinsPerMonthResponse,
+  ITopFiveLikes
 } from './model';
 import * as seed from './seed';
 import { init } from '../../db';
@@ -87,6 +88,27 @@ describe('user-preference test suites', () => {
 
     // logger.info({ label: 'expectValue', msg: expectValue });
 
+    expect(actualValue).to.be.deep.equal(expectValue);
+  });
+
+  it('topFiveLikes', async () => {
+    const actualValue: ITopFiveLikes[] = await User.topFiveLikes();
+    // logger.info({ label: 'actualValue', msg: actualValue });
+
+    const expectValue = _.chain(datas)
+      .reduce((pre: string[], data: IUserDocument) => pre.concat(data.likes), [])
+      .countBy()
+      .map((val, key) => {
+        return {
+          _id: key,
+          number: val
+        };
+      })
+      .orderBy(['number', '_id'], ['desc', 'asc'])
+      .take(5)
+      .value();
+
+    // logger.info(expectValue);
     expect(actualValue).to.be.deep.equal(expectValue);
   });
 });
