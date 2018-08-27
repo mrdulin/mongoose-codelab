@@ -6,7 +6,7 @@ import * as seed from './seed';
 import { init } from '../db';
 import { logger } from '../util';
 import { Category } from './model';
-import { getCategoryBySlug, createNewCategory, changeAncestryOfCategory } from './';
+import { getCategoryBySlug, createNewCategory, changeAncestryOfCategory } from '.';
 
 let conn: Mongoose | undefined;
 let datas: any;

@@ -1,15 +1,15 @@
 import { Model, model, Document, Schema } from 'mongoose';
 
+const collectionNamePrefix = 'join';
+
 const personSchema = new Schema(
   {
     name: String
   },
   {
-    collection: 'left-outer-join_persons'
+    collection: `${collectionNamePrefix}_persons`
   }
 );
-
-const Person = model('Person', personSchema);
 
 const orderSchema = new Schema(
   {
@@ -17,10 +17,11 @@ const orderSchema = new Schema(
     personId: { type: Schema.Types.ObjectId, ref: 'Person' }
   },
   {
-    collection: 'left-outer-join_orders'
+    collection: `${collectionNamePrefix}_orders`
   }
 );
 
 const Order = model('Order', orderSchema);
+const Person = model('Person', personSchema);
 
-export { Person, Order };
+export { Person, Order, collectionNamePrefix };

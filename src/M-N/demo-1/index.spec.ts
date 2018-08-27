@@ -6,7 +6,7 @@ import * as seed from './init';
 import { init, MongoConnect } from '../../db';
 import { logger } from '../../util';
 import { Product, Category, ProductCategory } from './model';
-import { getProductWithCategories } from './';
+import { getProductWithCategories } from '.';
 
 let conn: mongoose.Mongoose | undefined;
 let datas: any;
