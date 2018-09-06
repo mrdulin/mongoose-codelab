@@ -1,6 +1,6 @@
 import { Model, model, Document, Schema } from 'mongoose';
 
-const collectionNamePrefix = 'join';
+const collectionNamePrefix = 'join_get-started';
 
 const personSchema = new Schema(
   {
