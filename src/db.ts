@@ -3,9 +3,10 @@ import * as mongoose from 'mongoose';
 import { config } from './config';
 import { logger } from './util';
 
-const { MONGO_HOST, MONGO_PORT, MONGO_APPLICATION_DATABASE } = config;
+const { MONGO_HOST, MONGO_PORT, MONGO_APPLICATION_DATABASE, MONGODB_URI } = config;
 
-const uri: string = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_APPLICATION_DATABASE}`;
+// const uri: string = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_APPLICATION_DATABASE}`;
+const uri = MONGODB_URI;
 
 async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
   mongoose.connection
@@ -18,8 +19,8 @@ async function MongoConnect(): Promise<mongoose.Mongoose | undefined> {
     .on('connected', () => {
       logger.info('Connect mongodb successfully');
     })
-    .on('error', () => {
-      logger.error('Connect mongodb failed');
+    .on('error', error => {
+      logger.error(`Connect mongodb failed, ${error}`);
     });
 
   return mongoose.connect(
