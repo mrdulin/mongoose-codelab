@@ -3,27 +3,27 @@ import * as casual from 'casual';
 const metaDatas = [
   {
     author: casual.username,
-    count: 12
+    count: 12,
   },
   {
     author: casual.username,
-    count: 23
+    count: 23,
   },
   {
     author: casual.username,
-    count: 17
-  }
+    count: 17,
+  },
 ];
 
 function generateData(metas: any[] = metaDatas) {
   return metas
     .map((meta: any) => {
-      const docs = [];
+      const docs: any[] = [];
       for (let i = 0; i < meta.count; i += 1) {
         const doc = {
           title: casual.title,
           author: meta.author,
-          body: casual.text
+          body: casual.text,
         };
         docs.push(doc);
       }

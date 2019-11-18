@@ -30,7 +30,7 @@ export async function createNewCategory(doc: any) {
 }
 
 export async function buildAllAncestors(id: string, parent: string) {
-  const ancestors = [];
+  const ancestors: any[] = [];
 
   while (parent) {
     const parentCat: any = await Category.findOne({ _id: parent });

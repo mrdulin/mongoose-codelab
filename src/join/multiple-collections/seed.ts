@@ -12,26 +12,32 @@ const bookId: Types.ObjectId = Types.ObjectId();
 
 async function main(): Promise<any> {
   const datas = {
-    users: [{ orgId, name: casual.name }, { orgId: Types.ObjectId(), name: casual.name }],
+    users: [
+      { orgId, name: casual.name },
+      { orgId: Types.ObjectId(), name: casual.name },
+    ],
     bookTemplates: [
       { _id: bookTemplateId, orgId, title: casual.title },
       { _id: bookTemplateId2, orgId, name: casual.title },
-      { orgId: Types.ObjectId(), name: casual.title }
+      { orgId: Types.ObjectId(), name: casual.title },
     ],
     books: [
       { _id: bookId, bookTemplateId, title: casual.title },
       { _id: Types.ObjectId(), bookTemplateId, title: casual.title },
       { bookTemplateId: bookTemplateId2, title: casual.title },
-      { bookTemplateId: Types.ObjectId(), title: casual.title }
+      { bookTemplateId: Types.ObjectId(), title: casual.title },
     ],
-    bookResults: [{ bookId, clicks: 100 }, { bookId: Types.ObjectId(), clicks: 200 }]
+    bookResults: [
+      { bookId, clicks: 100 },
+      { bookId: Types.ObjectId(), clicks: 200 },
+    ],
   };
 
   return Promise.all([
     init(datas.users, User, 'User', false),
     init(datas.bookTemplates, BookTemplate, 'BookTemplate', false),
     init(datas.books, Book, 'Book', false),
-    init(datas.bookResults, BookResult, 'BookResult', false)
+    init(datas.bookResults, BookResult, 'BookResult', false),
   ]);
 }
 

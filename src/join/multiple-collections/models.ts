@@ -25,39 +25,39 @@ interface IBookResult extends Document {
 const userSchema: Schema = new Schema(
   {
     name: String,
-    orgId: Schema.Types.ObjectId
+    orgId: Schema.Types.ObjectId,
   },
-  { collection: `${collectionNamePrefix}_users` }
+  { collection: `${collectionNamePrefix}_users` },
 );
 
 const bookTemplateSchema: Schema = new Schema(
   {
     title: String,
-    orgId: Schema.Types.ObjectId
+    orgId: Schema.Types.ObjectId,
   },
   {
-    collection: `${collectionNamePrefix}_bookTemplates`
-  }
+    collection: `${collectionNamePrefix}_bookTemplates`,
+  },
 );
 
 const bookSchema: Schema = new Schema(
   {
     title: String,
-    bookTemplateId: Schema.Types.ObjectId
+    bookTemplateId: Schema.Types.ObjectId,
   },
   {
-    collection: `${collectionNamePrefix}_books`
-  }
+    collection: `${collectionNamePrefix}_books`,
+  },
 );
 
 const bookResultSchema: Schema = new Schema(
   {
     clicks: Number,
-    bookId: Schema.Types.ObjectId
+    bookId: Schema.Types.ObjectId,
   },
   {
-    collection: `${collectionNamePrefix}_bookResults`
-  }
+    collection: `${collectionNamePrefix}_bookResults`,
+  },
 );
 
 const User: Model<IUser> = model<IUser>('User', userSchema);

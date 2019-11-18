@@ -7,6 +7,7 @@ describe('user-preference unit test suites', () => {
     sinon.restore();
   });
   it('#uppercaseAndSortByUsername', async () => {
+    // @ts-ignore
     const stub = sinon.stub(User, 'aggregate').resolves({});
     const actualValue = await User.uppercaseAndSortByUsername.call(User);
     expect(actualValue).to.be.eql({});
@@ -24,6 +25,7 @@ describe('user-preference unit test suites', () => {
   });
 
   it('#usernamesOrderedByJoinMonth', async () => {
+    // @ts-ignore
     const stub = sinon.stub(User, 'aggregate').resolves({});
     const actualValue = await User.usernamesOrderedByJoinMonth.call(User);
     expect(actualValue).to.be.eql({});
@@ -40,6 +42,7 @@ describe('user-preference unit test suites', () => {
   });
 
   it('#totalNumberOfJoinsPerMonth', async () => {
+    // @ts-ignore
     const stub = sinon.stub(User, 'aggregate').resolves({});
     const actualValue = await User.totalNumberOfJoinsPerMonth.call(User);
     expect(actualValue).to.be.eql({});
@@ -59,6 +62,7 @@ describe('user-preference unit test suites', () => {
   });
 
   it('#topFiveLikes', async () => {
+    // @ts-ignore
     const stub = sinon.stub(User, 'aggregate').resolves({});
     const actualValue = await User.topFiveLikes.call(User);
     expect(actualValue).to.be.eql({});

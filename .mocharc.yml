@@ -1,0 +1,5 @@
+recursive: true
+# spec: 'src/**/*.spec.ts'
+require:
+  - ts-node/register
+  - source-map-support/register
