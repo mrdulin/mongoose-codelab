@@ -8,7 +8,7 @@ if (result.error) {
 console.log(result.parsed);
 
 const config = {
-  MONGODB_URI: process.env.MONGO_URL,
+  MONGODB_URI: process.env.MONGO_URL || '',
 };
 
 export { config };
