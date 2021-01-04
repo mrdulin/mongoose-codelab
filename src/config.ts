@@ -1,8 +1,14 @@
+const dotenv = require('dotenv');
+const path = require('path');
+const result = dotenv.config({ path: path.resolve(__dirname, '../.env') });
+if (result.error) {
+  console.error(result.error);
+  process.exit(1);
+}
+console.log(result.parsed);
+
 const config = {
-  MONGO_HOST: 'localhost',
-  MONGO_PORT: '27017',
-  MONGO_APPLICATION_DATABASE: 'mongoose5-lab',
-  MONGODB_URI: 'mongodb://admin:admin123@ds055689.mlab.com:55689/mongoose5-lab'
+  MONGODB_URI: process.env.MONGO_URL,
 };
 
 export { config };
