@@ -4,7 +4,6 @@ import { logger } from './util';
 import _ from 'lodash';
 
 const { MONGODB_URI } = config;
-const uri = MONGODB_URI;
 
 interface IConnectOptions {
   cleanUp: boolean;
@@ -12,7 +11,7 @@ interface IConnectOptions {
 }
 
 function MongoConnect(callback: (connection: mongoose.Connection) => Promise<void>, options?: IConnectOptions): void {
-  if (!uri) {
+  if (!MONGODB_URI) {
     throw new Error('connection uri is empty');
   }
   const defaultOptions = {
@@ -22,7 +21,7 @@ function MongoConnect(callback: (connection: mongoose.Connection) => Promise<voi
   const finalOptions = _.merge(options, defaultOptions);
 
   mongoose.set('debug', true);
-  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
   mongoose.connection
     .on('connecting', () => {
       logger.info('trying to establish a connection to mongo');
