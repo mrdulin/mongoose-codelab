@@ -2,14 +2,9 @@
   "name": "mongoose5.x-lab",
   "version": "1.0.0",
   "description": "Learning mongoose version 5.x with nodejs",
-  "main": "",
   "scripts": {
     "test": "mocha",
     "test:coverage": "nyc npm t"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mrdulin/mongoose5.x-lab.git"
   },
   "keywords": [
     "mongoose",
@@ -18,11 +13,6 @@
     "mongodb"
   ],
   "author": "mrdulin",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mrdulin/mongoose5.x-lab/issues"
-  },
-  "homepage": "https://github.com/mrdulin/mongoose5.x-lab#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
@@ -43,6 +33,7 @@
     "@types/supertest": "^2.0.10",
     "casual": "^1.6.2",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
     "mocha": "^6.2.2",
     "nyc": "^14.1.1",
