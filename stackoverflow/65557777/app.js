@@ -1,4 +1,4 @@
-const { MongoConnect } = require('../../db');
+const { MongoConnect } = require('../../src/db');
 const User = require('./user');
 
 function main() {

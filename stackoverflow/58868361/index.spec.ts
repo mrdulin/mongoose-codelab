@@ -1,4 +1,4 @@
-import { setFullWidth } from './';
+import { setFullWidth } from '.';
 import sinon, { SinonStubbedInstance } from 'sinon';
 import { expect } from 'chai';
 

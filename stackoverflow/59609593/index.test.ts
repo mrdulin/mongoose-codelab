@@ -1,4 +1,4 @@
-import SomeClass from './';
+import SomeClass from '.';
 import sinon from 'sinon';
 
 describe('59609593', () => {

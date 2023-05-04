@@ -1,4 +1,4 @@
-import { FooClass } from './';
+import { FooClass } from '.';
 import sinon, { assert } from 'sinon';
 
 describe('48775401', () => {

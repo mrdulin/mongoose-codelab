@@ -1,6 +1,6 @@
 import { User } from './user.model';
 import mongoose from 'mongoose';
-import { config } from '../../config';
+import { config } from '../../src/config';
 
 async function main() {
   mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
