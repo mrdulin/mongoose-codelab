@@ -20,11 +20,15 @@ async function main() {
       });
       await chat.save();
 
+      // const chatDoc = await Chat.findOne().populate({
+      //   path: 'messages',
+      //   populate: {
+      //     path: 'sender'
+      //   }
+      // }).exec();
+      // or more shorter
       const chatDoc = await Chat.findOne().populate({
-        path: 'messages',
-        populate: {
-          path: 'sender'
-        }
+        path: 'messages.sender'
       }).exec();
       console.log('chatDoc: ', chatDoc)
       console.log('chatDoc.messages[0].sender.name: ', chatDoc.messages[0].sender.name)
