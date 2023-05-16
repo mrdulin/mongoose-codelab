@@ -9,13 +9,13 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async () => {
   try {
     // seed
-    // @ts-ignore
     const comments = await Comment.create([{ content: 'comment a' }, { content: 'comment b' }])
     const post = new Post({ title: 'post a', comments });
     await post.save();
 
     // test
     const postDoc = await Post.findOne({ title: 'post a' })
+    if (!postDoc) return console.error('post not found');
     await postDoc.remove();
 
   } catch (error) {
