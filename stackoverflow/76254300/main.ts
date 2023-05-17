@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { config } from '../../src/config';
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
-mongoose.set('debug', true);
+mongoose.set('debug', true)
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async () => {
