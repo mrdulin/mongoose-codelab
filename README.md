@@ -1,6 +1,6 @@
-# mongoose5.x-lab
+# Mongoose Codelab
 
-## Unit testing
+## Testing
 
 ```bash
 npm test -- src/aggregate/models/Num/index.spec.ts
