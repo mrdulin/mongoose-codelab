@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
 
-const result = dotenv.config({ path: path.resolve(__dirname, './.env') });
+const result = dotenv.config({ path: path.resolve(__dirname, '../.env') });
 if (result.error) {
   console.error(result.error);
   process.exit(1);
