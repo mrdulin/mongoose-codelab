@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { config } from '../../config';
+import { config } from '../../../v6/config';
 
 const houseSchema = new mongoose.Schema({
   name: String,
@@ -14,8 +14,9 @@ const House = mongoose.model('house', houseSchema);
 
     const house = new House({
       name: 'house a',
-      images: [{ url: 'http://example.com/avatar.jpg' }]
+      images: [{ url: 'http://example.com/avatar.jpg' }],
     })
+    console.log(house.images instanceof mongoose.Schema.Types.Mixed) // false
     await house.save();
 
     // query
