@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <img id="test-img" src="" alt="">
+  <script>
+    window.onload = () => {
+      const getImageById = (id) => fetch(`http://localhost:3000/image/${id}`).then(res => res.json())
+
+      getImageById('6468539a5e747bcdd33dd6e4').then((res) => {
+        console.log(res);
+        const $img = document.getElementById('test-img');
+        $img.setAttribute('src', `data:image/jpeg;base64,${res.file.data.toString('base64')}`)
+      })
+    }
+  </script>
+</body>
+
+</html>
