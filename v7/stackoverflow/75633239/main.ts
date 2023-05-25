@@ -26,7 +26,7 @@ const BorrowBook = mongoose.model('borrow_book', borrowBookSchema);
         member_id: new mongoose.Types.ObjectId(), bookdetails: [
           { bookid: new mongoose.Types.ObjectId(), status: false },
           { bookid: new mongoose.Types.ObjectId(), status: false },
-          { bookId: new mongoose.Types.ObjectId(), status: true }]
+          { bookid: new mongoose.Types.ObjectId(), status: true }]
       },
       { member_id: new mongoose.Types.ObjectId(), bookdetails: [] }
     ])
