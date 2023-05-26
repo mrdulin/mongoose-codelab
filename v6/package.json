@@ -7,8 +7,6 @@
   "devDependencies": {
     "@types/mongoose": "^5.11.97",
     "dotenv": "^16.0.3",
-    "expect-type": "^0.15.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "expect-type": "^0.15.0"
   }
 }

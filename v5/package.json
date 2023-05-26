@@ -6,12 +6,6 @@
     "test": "mocha",
     "test:coverage": "nyc npm t"
   },
-  "keywords": [
-    "mongoose",
-    "nodejs",
-    "unit test",
-    "mongodb"
-  ],
   "author": "mrdulin",
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -43,8 +37,6 @@
     "sinon": "^7.5.0",
     "source-map-support": "^0.5.16",
     "supertest": "^4.0.2",
-    "ts-node": "^8.10.2",
-    "tslint": "^5.20.1",
-    "typescript": "^3.9.10"
+    "tslint": "^5.20.1"
   }
 }

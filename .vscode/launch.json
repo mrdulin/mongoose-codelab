@@ -5,11 +5,37 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "ts-node debug",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "${relativeFile}"
+      ],
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal",
+      "type": "node"
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Mocha Tests",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": ["-u", "tdd", "--timeout", "999999", "--colors", "-r", "ts-node/register", "${relativeFile}"],
+      "args": [
+        "-u",
+        "tdd",
+        "--timeout",
+        "999999",
+        "--colors",
+        "-r",
+        "ts-node/register",
+        "${relativeFile}"
+      ],
       "cwd": "${workspaceRoot}",
       "env": {
         "NODE_ENV": "test"
