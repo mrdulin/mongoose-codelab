@@ -23,8 +23,8 @@ const Model = mongoose.model('model', modelSchema);
       },
       {
         ss_characteristics: [
-          { ssfollow_sinusitis: 'No', id: new mongoose.Types.ObjectId() },
-          { ssfollow_sinusitis: 'No', id: new mongoose.Types.ObjectId() }
+          { ssfollow_sinusitis: 'No', 'test field': 'a', id: new mongoose.Types.ObjectId() },
+          { ssfollow_sinusitis: 'No', 'test field': 'b', id: new mongoose.Types.ObjectId() }
         ]
       },
       {
@@ -47,7 +47,10 @@ const Model = mongoose.model('model', modelSchema);
               in: {
                 $mergeObjects: [
                   '$$this',
-                  { sinusitis: '$$this.ssfollow_sinusitis' }
+                  {
+                    sinusitis: '$$this.ssfollow_sinusitis',
+                    test_field: '$$this.test field'
+                  }
                 ],
               }
             }
@@ -55,7 +58,7 @@ const Model = mongoose.model('model', modelSchema);
         },
       },
       {
-        $unset: "ss_characteristics.ssfollow_sinusitis"
+        $unset: ["ss_characteristics.ssfollow_sinusitis", 'ss_characteristics.test field']
       }
     ])
     console.log('updateResult: ', util.inspect(updateResult, false, null))
