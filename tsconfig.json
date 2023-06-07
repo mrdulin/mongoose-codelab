@@ -11,6 +11,7 @@
     /* Language and Environment */
     "target": "ESNext", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "lib": [
+      "DOM",
       "es2015",
       "es2016",
       "es2017",
