@@ -10,8 +10,6 @@ if (!process.env.CODESPACES) {
   console.log(result.parsed);
 }
 
-console.log(process.env)
-
 const config = {
   MONGODB_URI: process.env.MONGODB_URI || '',
 };
