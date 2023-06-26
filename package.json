@@ -2,9 +2,13 @@
 	"name": "mongoose-codelab",
 	"version": "1.0.0",
 	"devDependencies": {
+		"@faker-js/faker": "^8.0.2",
 		"@types/node": "^20.2.5",
 		"prettier": "^2.8.8",
 		"ts-node": "^10.9.1",
+		"dotenv": "^16.0.3",
+		"expect-type": "^0.15.0",
+		"mongodb-memory-server": "^8.12.2",
 		"typescript": "^5.0.4"
 	}
 }

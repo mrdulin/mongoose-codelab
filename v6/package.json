@@ -1,12 +1,10 @@
 {
-  "name": "v6",
-  "scripts": {},
-  "dependencies": {
-    "mongoose": "^6.11.1"
-  },
-  "devDependencies": {
-    "@types/mongoose": "^5.11.97",
-    "dotenv": "^16.0.3",
-    "expect-type": "^0.15.0"
-  }
+	"name": "v6",
+	"scripts": {},
+	"dependencies": {
+		"mongoose": "^6.11.1"
+	},
+	"devDependencies": {
+		"@types/mongoose": "^5.11.97"
+	}
 }
