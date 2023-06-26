@@ -3,47 +3,31 @@ import { config } from '../../config';
 
 mongoose.set('debug', true);
 
-const userSchema = new mongoose.Schema({
-	name: String,
+const recordSchema = new mongoose.Schema({
+	extras: [String],
+	skills: [String],
 });
-userSchema.method('dept', async function () {
-	console.log(this);
-	// @ts-ignore
-	const result = await mongoose.model('bill').aggregate([
-		{
-			$match: {
-				$and: [{ 'user._id': this._id }, { balance: { $gt: 0 } }],
-			},
-		},
-		{
-			$group: { _id: null, total: { $sum: '$balance' } },
-		},
-	]);
-	return result[0].total;
+recordSchema.pre('validate', function (next) {
+	console.log('this: ', this);
+	next();
 });
-const User = mongoose.model('user', userSchema);
-
-const billSchema = new mongoose.Schema({
-	balance: Number,
-	user: userSchema,
-});
-const Bill = mongoose.model('bill', billSchema);
+const Record = mongoose.model('record', recordSchema);
 
 (async function main() {
 	try {
 		await mongoose.connect(config.MONGODB_URI);
-		await Promise.all([User, Bill].map((m) => m.collection.drop()));
+		await Promise.all([Record].map((m) => m.collection.drop()));
 		// seed
-		const [user1, user2] = await User.create([{ name: 'Nick' }, { name: 'Jack' }]);
-		await Bill.create([
-			{ balance: 100, user: user1 },
-			{ balance: 200, user: user1 },
-			{ balance: 0, user: user1 },
-			{ balance: 50, user: user2 },
-		]);
-		//@ts-ignore
-		const dept = await user1.dept();
-		console.log("Nick's dept: ", dept);
+		const body = {
+			extras: [{ value: 'a' }, { value: 'b' }, { value: 'c' }],
+			skills: [{ value: 'x' }, { value: 'y' }],
+		};
+		const r1 = new Record(body);
+		console.log('r1: ', r1);
+
+		const r2 = new Record({ extras: body.extras.map((v) => v.value), skills: body.skills.map((v) => v.value) });
+		console.log('r2: ', r2);
+		await r2.save();
 	} catch (error) {
 		console.error(error);
 	} finally {

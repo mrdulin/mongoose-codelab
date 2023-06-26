@@ -3,10 +3,10 @@ import { config } from '../../config';
 
 mongoose.set('debug', true);
 
-const billSchema = new mongoose.Schema({
+const quoteSchema = new mongoose.Schema({
 	author: String,
 });
-const QuoteModel = mongoose.model('quote', billSchema);
+const QuoteModel = mongoose.model('quote', quoteSchema);
 
 (async function main() {
 	try {
