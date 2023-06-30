@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import util from 'util';
 import { config } from '../../config';
 
 mongoose.set('debug', true);
@@ -15,9 +16,9 @@ const User = mongoose.model('user', userSchema);
 		// seed
 		// const users = await User.find({}).limit(2).sort({ _id: 'desc' }).exec();
 		const filter = {};
-		const r = await User.aggregate().match({}).limit(2).sort({ _id: 'desc' }).exec();
+		const r = await User.aggregate().match({}).limit(2).sort({ _id: 'desc' }).explain();
 
-		console.log(r);
+		console.log(util.inspect(r, false, null));
 	} catch (error) {
 		console.error(error);
 	} finally {
