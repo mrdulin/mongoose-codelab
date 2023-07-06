@@ -1,7 +1,7 @@
 import * as m from 'mongoose';
 
 interface MyDocument {
-	deletedAt: Date;
+	deletedAt?: Date;
 }
 
 interface MyDocumentMethods {
@@ -25,3 +25,4 @@ const MyModel = m.model<MyDocument, ModelType>('MyCollection', MySchema);
 let myInstance = new MyModel();
 myInstance.myDelete();
 myInstance.myUndelete();
+myInstance.deletedAt; // ok
