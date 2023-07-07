@@ -24,7 +24,7 @@ const Test = mongoose.model('Test', schema);
 				],
 			},
 		]);
-		console.log(t2.toObject());
+		console.log(t2?.toObject());
 		const res = await Test.updateMany(
 			{
 				name: 'name2',

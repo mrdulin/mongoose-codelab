@@ -1,4 +1,4 @@
-rsconf = {
+const rsconf = {
 	_id: 'rs0',
 	members: [
 		{
@@ -15,5 +15,3 @@ rsconf = {
 		},
 	],
 };
-
-export {};
